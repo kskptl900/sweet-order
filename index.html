@@ -1,423 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sweet Shop Order Form</title>
-<style>
-  /* Reset & base */
-  * {
-    box-sizing: border-box;
-  }
-  body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #fff0f6;
-    margin: 0;
-    padding: 0 1rem 3rem;
-    color: #4a2c2a;
-  }
-  h1 {
-    text-align: center;
-    margin-top: 1rem;
-    color: #a83232;
-  }
-  form, .preview {
-    max-width: 480px;
-    margin: 1rem auto;
-    background: #fff;
-    border-radius: 12px;
-    padding: 1.5rem 2rem;
-    box-shadow: 0 4px 12px rgb(168 50 50 / 0.3);
-  }
-  label {
-    display: block;
-    margin-bottom: 0.3rem;
-    font-weight: 600;
-  }
-  input[type="text"], input[type="tel"] {
-    width: 100%;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    border: 1.5px solid #d98c8c;
-    font-size: 1rem;
-    margin-bottom: 1rem;
-  }
-  .items {
-    margin-bottom: 1rem;
-  }
-  .item-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 0.8rem;
-  }
-  .item-name {
-    font-weight: 600;
-    flex: 1 1 40%;
-  }
-  .qty-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  button.qty-btn {
-    width: 32px;
-    height: 32px;
-    border: none;
-    background: #a83232;
-    color: white;
-    font-weight: 700;
-    font-size: 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    user-select: none;
-    line-height: 1;
-  }
-  button.qty-btn:disabled {
-    background: #d9a5a5;
-    cursor: not-allowed;
-  }
-  .qty-display {
-    min-width: 48px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 1rem;
-    color: #a83232;
-  }
-  .error {
-    color: #b00020;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  button.submit-btn {
-    width: 100%;
-    background: #a83232;
-    color: white;
-    font-size: 1.1rem;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 700;
-    transition: background-color 0.3s ease;
-  }
-  button.submit-btn:hover {
-    background: #7a2222;
-  }
-  /* Preview styles */
-  .preview {
-    display: none;
-    flex-direction: column;
-  }
-  .preview h2 {
-    text-align: center;
-    color: #a83232;
-  }
-  .preview-items {
-    margin: 1rem 0;
-  }
-  .preview-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.4rem;
-    font-weight: 600;
-  }
-  .preview-total {
-    font-size: 1.2rem;
-    font-weight: 700;
-    text-align: right;
-    margin-top: 1rem;
-    color: #a83232;
-  }
-  .preview-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 1.5rem;
-  }
-  .preview-buttons button {
-    flex: 1 1 48%;
-    padding: 0.75rem;
-    font-weight: 700;
-    font-size: 1rem;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    color: white;
-  }
-  .btn-modify {
-    background: #d98c8c;
-  }
-  .btn-modify:hover {
-    background: #c06a6a;
-  }
-  .btn-confirm {
-    background: #a83232;
-  }
-  .btn-confirm:hover {
-    background: #7a2222;
-  }
-  /* Responsive */
-  @media (max-width: 520px) {
-    form, .preview {
-      margin: 1rem 0.5rem;
-      padding: 1rem 1.2rem;
-    }
-  }
-</style>
+  <meta charset="UTF-8">
+  <title>Sweet Order Form</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    .item { margin-bottom: 10px; }
+    input[type=number] { width: 60px; }
+    button { padding: 8px 15px; margin-top: 15px; }
+  </style>
 </head>
 <body>
+  <h2>🍬 Sweet Order Form</h2>
+  <form id="orderForm">
+    <label>Customer Name: <input type="text" id="name" required></label><br><br>
+    <label>Mobile: <input type="text" id="mobile" maxlength="10" required></label><br><br>
 
-<h1>મીઠાઈઓનું ઑનલાઇન ઓર્ડર ફોર્મ</h1>
+    <div class="item">Laadu (₹160/kg): <input type="number" min="0" step="0.5" id="laadu" value="0"></div>
+    <div class="item">Papdi (₹180/kg): <input type="number" min="0" step="0.5" id="papdi" value="0"></div>
+    <div class="item">Ganthiya (₹150/kg): <input type="number" min="0" step="0.5" id="ganthiya" value="0"></div>
 
-<form id="orderForm" autocomplete="off" novalidate>
-  <label for="customerName">ગ્રાહકનું નામ *</label>
-  <input type="text" id="customerName" name="customerName" placeholder="તમારું નામ લખો" required />
+    <button type="submit">Submit Order</button>
+  </form>
 
-  <label for="mobileNumber">મોબાઇલ નંબર *</label>
-  <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="૯૮૭૬૫૪૩૨૧૦" pattern="[0-9]{10}" required />
+  <div id="result"></div>
 
-  <div class="items">
-    <label>મીઠાઈઓ પસંદ કરો (કિલોગ્રામમાં): *</label>
+  <script>
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYo_yqZIpuS0mP3TidkBAzgWnoLdwYLWk233iv9pDIPmNaVzpYFggD9ni7gOht8c8z/exec";
 
-    <div class="item-row" data-item="Laadu" data-rate="200">
-      <div class="item-name">લાડુ (₹200/કિગ્રા)</div>
-      <div class="qty-controls">
-        <button type="button" class="qty-btn minus" aria-label="Decrease Laadu quantity">−</button>
-        <div class="qty-display" aria-live="polite" aria-atomic="true">0</div>
-        <button type="button" class="qty-btn plus" aria-label="Increase Laadu quantity">+</button>
-      </div>
-    </div>
-
-    <div class="item-row" data-item="Papdi" data-rate="150">
-      <div class="item-name">પાપડી (₹150/કિગ્રા)</div>
-      <div class="qty-controls">
-        <button type="button" class="qty-btn minus" aria-label="Decrease Papdi quantity">−</button>
-        <div class="qty-display" aria-live="polite" aria-atomic="true">0</div>
-        <button type="button" class="qty-btn plus" aria-label="Increase Papdi quantity">+</button>
-      </div>
-    </div>
-
-    <div class="item-row" data-item="Ganthiya" data-rate="180">
-      <div class="item-name">ગાંઠિયા (₹180/કિગ્રા)</div>
-      <div class="qty-controls">
-        <button type="button" class="qty-btn minus" aria-label="Decrease Ganthiya quantity">−</button>
-        <div class="qty-display" aria-live="polite" aria-atomic="true">0</div>
-        <button type="button" class="qty-btn plus" aria-label="Increase Ganthiya quantity">+</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="error" id="formError" role="alert" aria-live="assertive"></div>
-
-  <button type="submit" class="submit-btn">ઓર્ડર મોકલો</button>
-</form>
-
-<div class="preview" id="orderPreview" aria-live="polite" aria-atomic="true">
-  <h2>ઓર્ડર પૂર્વાવલોકન</h2>
-  <div><strong>ગ્રાહકનું નામ:</strong> <span id="previewName"></span></div>
-  <div><strong>મોબાઇલ નંબર:</strong> <span id="previewMobile"></span></div>
-  <div class="preview-items" id="previewItems"></div>
-  <div class="preview-total" id="previewTotal"></div>
-  <div class="preview-buttons">
-    <button type="button" class="btn-modify" id="btnModify">📝 ઓર્ડર ફેરફાર કરો</button>
-    <button type="button" class="btn-confirm" id="btnConfirm">✅ ઓર્ડર કન્ફર્મ કરો</button>
-  </div>
-</div>
-
-<script>
-  (() => {
-    const form = document.getElementById('orderForm');
-    const errorDiv = document.getElementById('formError');
-    const preview = document.getElementById('orderPreview');
-    const previewName = document.getElementById('previewName');
-    const previewMobile = document.getElementById('previewMobile');
-    const previewItems = document.getElementById('previewItems');
-    const previewTotal = document.getElementById('previewTotal');
-    const btnModify = document.getElementById('btnModify');
-    const btnConfirm = document.getElementById('btnConfirm');
-
-    // Quantity step and limits
-    const STEP = 0.5;
-    const MIN_QTY = 0;
-    const MAX_QTY = 10;
-
-    // Get all item rows
-    const itemRows = [...document.querySelectorAll('.item-row')];
-
-    // Initialize quantities
-    itemRows.forEach(row => {
-      const minusBtn = row.querySelector('.qty-btn.minus');
-      const plusBtn = row.querySelector('.qty-btn.plus');
-      const qtyDisplay = row.querySelector('.qty-display');
-      let qty = 0;
-
-      minusBtn.addEventListener('click', () => {
-        if (qty > MIN_QTY) {
-          qty = Math.max(MIN_QTY, +(qty - STEP).toFixed(1));
-          qtyDisplay.textContent = qty === 0 ? '0' : qty;
-          updateButtons();
-        }
-      });
-
-      plusBtn.addEventListener('click', () => {
-        if (qty < MAX_QTY) {
-          qty = Math.min(MAX_QTY, +(qty + STEP).toFixed(1));
-          qtyDisplay.textContent = qty;
-          updateButtons();
-        }
-      });
-
-      // Store qty in dataset for easy access
-      row.dataset.qty = qty;
-
-      // Update qty on change
-      function updateButtons() {
-        row.dataset.qty = qty;
-        minusBtn.disabled = qty <= MIN_QTY;
-        plusBtn.disabled = qty >= MAX_QTY;
-      }
-      updateButtons();
-    });
-
-    // Validate form inputs
-    function validateForm() {
-      errorDiv.textContent = '';
-      const name = form.customerName.value.trim();
-      const mobile = form.mobileNumber.value.trim();
-      if (!name) {
-        errorDiv.textContent = 'કૃપા કરીને ગ્રાહકનું નામ દાખલ કરો.';
-        return false;
-      }
-      if (!/^\d{10}$/.test(mobile)) {
-        errorDiv.textContent = 'કૃપા કરીને માન્ય ૧૦ અંકનો મોબાઇલ નંબર દાખલ કરો.';
-        return false;
-      }
-      // Check at least one item qty > 0
-      const totalQty = itemRows.reduce((sum, row) => sum + parseFloat(row.dataset.qty || 0), 0);
-      if (totalQty <= 0) {
-        errorDiv.textContent = 'કૃપા કરીને ઓછામાં ઓછું એક મીઠાઈ પસંદ કરો.';
-        return false;
-      }
-      return true;
-    }
-
-    // Prepare order data
-    function getOrderData() {
-      const customerName = form.customerName.value.trim();
-      const mobileNumber = form.mobileNumber.value.trim();
-      const items = itemRows
-        .map(row => {
-          const qty = parseFloat(row.dataset.qty || 0);
-          if (qty > 0) {
-            return {
-              name: row.dataset.item,
-              qty,
-              rate: parseFloat(row.dataset.rate),
-              total: +(qty * parseFloat(row.dataset.rate)).toFixed(2)
-            };
-          }
-          return null;
-        })
-        .filter(Boolean);
-      const totalAmount = items.reduce((sum, i) => sum + i.total, 0);
-      return { customerName, mobileNumber, items, totalAmount };
-    }
-
-    // Show preview
-    function showPreview() {
-      const { customerName, mobileNumber, items, totalAmount } = getOrderData();
-      previewName.textContent = customerName;
-      previewMobile.textContent = mobileNumber;
-      previewItems.innerHTML = '';
-      items.forEach(i => {
-        const div = document.createElement('div');
-        div.className = 'preview-item';
-        div.textContent = `${i.name} × ${i.qty} Kg × ₹${i.rate} = ₹${i.total.toFixed(2)}`;
-        previewItems.appendChild(div);
-      });
-      previewTotal.textContent = `કુલ રકમ: ₹${totalAmount.toFixed(2)}`;
-      form.style.display = 'none';
-      preview.style.display = 'flex';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Back to form for modification
-    btnModify.addEventListener('click', () => {
-      preview.style.display = 'none';
-      form.style.display = 'block';
-      errorDiv.textContent = '';
-    });
-
-    // Confirm order: send data to Google Apps Script backend
-    btnConfirm.addEventListener('click', () => {
-      btnConfirm.disabled = true;
-      btnConfirm.textContent = 'ઓર્ડર મોકલાઈ રહ્યો છે...';
-
-      const orderData = getOrderData();
-
-      // Replace with your Google Apps Script Web App URL
-      const GAS_URL = 'https://script.google.com/macros/s/AKfycbxYo_yqZIpuS0mP3TidkBAzgWnoLdwYLWk233iv9pDIPmNaVzpYFggD9ni7gOht8c8z/exec';
-
-      fetch(GAS_URL, {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(orderData)
-      })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === 'success') {
-            alert(`ઓર્ડર સફળતાપૂર્વક મૂકાયો! ઓર્ડર નંબર: ${data.orderId}`);
-            // Trigger PDF download link
-            if (data.pdfUrl) {
-              const a = document.createElement('a');
-              a.href = data.pdfUrl;
-              a.download = `Receipt_Order_${data.orderId}.pdf`;
-              document.body.appendChild(a);
-              a.click();
-              a.remove();
-            }
-            // Optionally show WhatsApp link
-            if (data.whatsappLink) {
-              if (confirm('WhatsApp પર ઓર્ડર કન્ફર્મેશન મોકલવા માટે OK દબાવો.')) {
-                window.open(data.whatsappLink, '_blank');
-              }
-            }
-            // Reset form & preview
-            form.reset();
-            itemRows.forEach(row => {
-              row.dataset.qty = 0;
-              row.querySelector('.qty-display').textContent = '0';
-              row.querySelector('.qty-btn.minus').disabled = true;
-              row.querySelector('.qty-btn.plus').disabled = false;
-            });
-            preview.style.display = 'none';
-            form.style.display = 'block';
-          } else {
-            alert('ઓર્ડર મૂકવામાં ત્રુટિ આવી: ' + (data.message || 'અજ્ઞાત ભૂલ'));
-          }
-        })
-        .catch(err => {
-          alert('ઓર્ડર મોકલવામાં ત્રુટિ: ' + err.message);
-        })
-        .finally(() => {
-          btnConfirm.disabled = false;
-          btnConfirm.textContent = '✅ ઓર્ડર કન્ફર્મ કરો';
-        });
-    });
-
-    // On form submit, validate and show preview
-    form.addEventListener('submit', e => {
+    document.getElementById("orderForm").addEventListener("submit", async e => {
       e.preventDefault();
-      if (validateForm()) {
-        showPreview();
+
+      const name = document.getElementById("name").value.trim();
+      const mobile = document.getElementById("mobile").value.trim();
+      const laadu = parseFloat(document.getElementById("laadu").value) || 0;
+      const papdi = parseFloat(document.getElementById("papdi").value) || 0;
+      const ganthiya = parseFloat(document.getElementById("ganthiya").value) || 0;
+
+      const items = [];
+      let total = 0;
+
+      if (laadu > 0) { items.push({ name: "Laadu", qty: laadu }); total += laadu * 160; }
+      if (papdi > 0) { items.push({ name: "Papdi", qty: papdi }); total += papdi * 180; }
+      if (ganthiya > 0) { items.push({ name: "Ganthiya", qty: ganthiya }); total += ganthiya * 150; }
+
+      if (items.length === 0) return alert("Please select at least one sweet!");
+
+      const order = { customerName: name, mobileNumber: mobile, items, totalAmount: total };
+
+      try {
+        const res = await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(order)
+        });
+
+        const data = await res.json();
+        if (data.status === "success") {
+          document.getElementById("result").innerHTML = `
+            ✅ Order Placed!<br>
+            Order ID: <b>${data.orderId}</b><br>
+            <a href="${data.pdfUrl}" target="_blank">📄 Download Receipt</a><br>
+            <a href="${data.qrUrl}" target="_blank">🔗 UPI QR</a><br>
+            <a href="${data.whatsappLink}" target="_blank">💬 Send via WhatsApp</a>
+          `;
+        } else {
+          alert("Error: " + data.message);
+        }
+      } catch (err) {
+        alert("Request failed: " + err);
       }
     });
-  })();
-</script>
-
+  </script>
 </body>
 </html>
+
