@@ -1,78 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="gu">
 <head>
   <meta charset="UTF-8">
-  <title>Sweet Order Form</title>
+  <title>મીઠાઈ ઓર્ડર ફોર્મ</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    .item { margin-bottom: 10px; }
-    input[type=number] { width: 60px; }
-    button { padding: 8px 15px; margin-top: 15px; }
+    body { font-family: Arial, sans-serif; background: #fff8f0; padding: 20px; }
+    h2 { color: #c0392b; }
+    label { display: block; margin-top: 10px; }
+    input, button { padding: 8px; margin-top: 5px; width: 100%; max-width: 300px; }
+    button { background: #c0392b; color: white; border: none; cursor: pointer; border-radius: 6px; }
+    button:hover { background: #e74c3c; }
+    #msg { margin-top: 15px; font-weight: bold; }
+    a.whatsapp { display:inline-block; margin-top:10px; padding:8px 12px; background:#25D366; color:white; text-decoration:none; border-radius:6px; }
+    a.whatsapp:hover { background:#1DA851; }
   </style>
 </head>
 <body>
-  <h2>🍬 Sweet Order Form</h2>
+
+  <h2>🍬 મીઠાઈ માટે ઓનલાઈન ઓર્ડર</h2>
+
   <form id="orderForm">
-    <label>Customer Name: <input type="text" id="name" required></label><br><br>
-    <label>Mobile: <input type="text" id="mobile" maxlength="10" required></label><br><br>
+    <label>નામ:</label>
+    <input type="text" id="name" required>
 
-    <div class="item">Laadu (₹160/kg): <input type="number" min="0" step="0.5" id="laadu" value="0"></div>
-    <div class="item">Papdi (₹180/kg): <input type="number" min="0" step="0.5" id="papdi" value="0"></div>
-    <div class="item">Ganthiya (₹150/kg): <input type="number" min="0" step="0.5" id="ganthiya" value="0"></div>
+    <label>મોબાઇલ નંબર:</label>
+    <input type="text" id="mobile" required>
 
-    <button type="submit">Submit Order</button>
+    <label>ઓર્ડર વિગતો:</label>
+    <input type="text" id="items" placeholder="જેમ કે લાડુ 1kg, પાપડી 0.5kg" required>
+
+    <label>કુલ રકમ (₹):</label>
+    <input type="number" id="amount" required>
+
+    <button type="submit">✅ ઓર્ડર કન્ફર્મ કરો</button>
   </form>
 
-  <div id="result"></div>
+  <div id="msg"></div>
 
   <script>
-    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxYo_yqZIpuS0mP3TidkBAzgWnoLdwYLWk233iv9pDIPmNaVzpYFggD9ni7gOht8c8z/exec";
+    const scriptURL = "https://script.google.com/macros/s/AKfycbxYo_yqZIpuS0mP3TidkBAzgWnoLdwYLWk233iv9pDIPmNaVzpYFggD9ni7gOht8c8z/exec";  // Replace with Apps Script Web App link
 
-    document.getElementById("orderForm").addEventListener("submit", async e => {
+    document.getElementById("orderForm").addEventListener("submit", async (e) => {
       e.preventDefault();
 
-      const name = document.getElementById("name").value.trim();
-      const mobile = document.getElementById("mobile").value.trim();
-      const laadu = parseFloat(document.getElementById("laadu").value) || 0;
-      const papdi = parseFloat(document.getElementById("papdi").value) || 0;
-      const ganthiya = parseFloat(document.getElementById("ganthiya").value) || 0;
-
-      const items = [];
-      let total = 0;
-
-      if (laadu > 0) { items.push({ name: "Laadu", qty: laadu }); total += laadu * 160; }
-      if (papdi > 0) { items.push({ name: "Papdi", qty: papdi }); total += papdi * 180; }
-      if (ganthiya > 0) { items.push({ name: "Ganthiya", qty: ganthiya }); total += ganthiya * 150; }
-
-      if (items.length === 0) return alert("Please select at least one sweet!");
-
-      const order = { customerName: name, mobileNumber: mobile, items, totalAmount: total };
+      const orderData = {
+        name: document.getElementById("name").value,
+        mobile: document.getElementById("mobile").value,
+        items: document.getElementById("items").value,
+        totalAmount: document.getElementById("amount").value
+      };
 
       try {
-        const res = await fetch(SCRIPT_URL, {
+        const res = await fetch(scriptURL, {
           method: "POST",
           mode: "cors",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(order)
+          body: JSON.stringify(orderData)
         });
 
         const data = await res.json();
-        if (data.status === "success") {
-          document.getElementById("result").innerHTML = `
-            ✅ Order Placed!<br>
-            Order ID: <b>${data.orderId}</b><br>
-            <a href="${data.pdfUrl}" target="_blank">📄 Download Receipt</a><br>
-            <a href="${data.qrUrl}" target="_blank">🔗 UPI QR</a><br>
-            <a href="${data.whatsappLink}" target="_blank">💬 Send via WhatsApp</a>
-          `;
+        if (data.success) {
+          document.getElementById("msg").innerHTML = 
+            `🎉 તમારો ઓર્ડર કન્ફર્મ થયો!<br>
+             📦 ઓર્ડર નંબર: <b>${data.orderId}</b><br>
+             💰 રકમ: ₹${data.totalAmount}<br>
+             <a class="whatsapp" target="_blank" href="${data.whatsappUrl}">📲 WhatsApp કન્ફર્મેશન મોકલો</a>`;
         } else {
-          alert("Error: " + data.message);
+          document.getElementById("msg").innerHTML = "⚠️ ભૂલ: " + data.error;
         }
       } catch (err) {
-        alert("Request failed: " + err);
+        document.getElementById("msg").innerHTML = "❌ નેટવર્ક ભૂલ: " + err;
       }
     });
   </script>
+
 </body>
 </html>
-
